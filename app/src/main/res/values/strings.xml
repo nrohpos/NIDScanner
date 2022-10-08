@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">NIDScanner</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="scan_id">Scan ID</string>
+    <string name="id_card">ID Card</string>
+    <string name="id_scanner">ID Scanner</string>
+    <string name="id_type">ID Type</string>
+    <string name="id_number">ID Number</string>
+    <string name="expire_date">Expire Date</string>
+    <string name="detail">detail</string>
+    <string name="continue_string">continue</string>
+    <string name="requirements">Requirements</string>
+    <string name="face_finger_recognition">Face/Finger Recognition</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="your_original_valid_kh_id">Your original valid Khmer ID</string>
+    <string name="one_last_step">One last Step</string>
+    <string name="you_are_ready_to_go">You\'re Ready to Go.</string>
+    <string name="finish">Finish</string>
+</resources>

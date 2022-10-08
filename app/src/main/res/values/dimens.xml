@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="d24">24dp</dimen>
+    <dimen name="d52">52dp</dimen>
+</resources>
