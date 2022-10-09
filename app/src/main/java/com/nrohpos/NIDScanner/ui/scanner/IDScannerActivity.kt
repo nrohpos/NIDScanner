@@ -50,7 +50,7 @@ class IDScannerActivity : BaseActivity<ActivityIdscannerBinding>(), IDScannerVie
         super.onCreate(savedInstanceState)
         askPermission()
         viewModel.bind(this)
-        initScan()
+        initView()
     }
 
     //override function
@@ -70,7 +70,12 @@ class IDScannerActivity : BaseActivity<ActivityIdscannerBinding>(), IDScannerVie
     }
 
     //private function
-    private fun initScan() {
+    private fun initView() {
+        binding.backImageView.setOnClickListener {
+            onBackPressed()
+        }
+
+
         val mrzScanner = scanBotSDK.createMrzScanner()
         val mrzScannerFrameHandler = MRZScannerFrameHandler.attach(binding.cameraView, mrzScanner)
         mrzScannerFrameHandler.addResultHandler { result ->
