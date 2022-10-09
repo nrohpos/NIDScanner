@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/frenchPlum">
 
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/continueTextView"
         android:layout_width="match_parent"
@@ -30,7 +29,7 @@
         android:layout_alignParentEnd="true"
         android:orientation="vertical"
         android:padding="@dimen/fab_margin"
-        tools:context=".MainActivity">
+        tools:context=".ui.main.MainActivity">
 
         <TextView
             android:layout_width="match_parent"

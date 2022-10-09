@@ -5,4 +5,5 @@
     <color name="persianPink">#E681C9</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="redOrange">#FFFF4500</color>
 </resources>

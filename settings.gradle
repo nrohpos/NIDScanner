@@ -10,6 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        // Scanbot SDK maven repos:
+        maven { url "https://nexus.scanbot.io/nexus/content/repositories/releases/" }
+        maven { url "https://nexus.scanbot.io/nexus/content/repositories/snapshots/" }
     }
 }
 rootProject.name = "NIDScanner"

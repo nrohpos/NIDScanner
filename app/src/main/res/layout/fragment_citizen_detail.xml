@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/frenchPlum"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingStart="@dimen/fab_margin"
+        android:paddingRight="@dimen/fab_margin">
+
+        <ImageView
+            android:id="@+id/backImageView"
+            android:layout_width="@dimen/d24"
+            android:layout_height="@dimen/d24"
+            android:src="@drawable/ic_back"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="center_vertical"
+            android:text="@string/detail"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/fullNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="@font/montserrat_medium"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/idTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fullNameTextView"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="@font/montserrat_regular"
+            android:padding="@dimen/fab_margin"
+            android:text="@string/your_original_valid_kh_id"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/lastStepTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/idTextView"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="@dimen/d24"
+            android:fontFamily="@font/montserrat_regular"
+            android:padding="@dimen/fab_margin"
+            android:text="@string/one_last_step"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/lastStepTextView"
+            android:background="@drawable/bgdetailcitizen"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/idTypeView"
+                layout="@layout/custom_layout_textfield"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fab_margin"
+                android:layout_marginTop="@dimen/d24"
+                android:layout_marginEnd="@dimen/fab_margin" />
+
+            <include
+                android:id="@+id/idNumberView"
+                layout="@layout/custom_layout_textfield"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fab_margin"
+                android:layout_marginTop="@dimen/d10"
+                android:layout_marginEnd="@dimen/fab_margin" />
+
+            <include
+                android:id="@+id/expireDateView"
+                layout="@layout/custom_layout_textfield"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fab_margin"
+                android:layout_marginTop="@dimen/d10"
+                android:layout_marginEnd="@dimen/fab_margin" />
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/continueButton"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/d24"
+            android:backgroundTint="@color/frenchPlum"
+            android:fontFamily="@font/montserrat_bold"
+            android:maxLines="1"
+            android:text="@string/home"
+            android:textColor="@color/white"
+            app:cornerRadius="25dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

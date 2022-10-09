@@ -1,7 +1,9 @@
-package com.nrohpos.NIDScanner
+package com.nrohpos.NIDScanner.ui.main
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -14,22 +16,29 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.material.snackbar.Snackbar
 import com.nrohpos.NIDScanner.Viewmodel.MainActivityVM
 import com.nrohpos.NIDScanner.Viewmodel.MainView
 import com.nrohpos.NIDScanner.base.BaseActivity
 import com.nrohpos.NIDScanner.databinding.ActivityMainBinding
+import com.nrohpos.NIDScanner.ui.scanner.IDScannerActivity
 import java.util.concurrent.Executor
 
-class MainActivity : BaseActivity(), MainView {
+/*Android 7.1 Nougat	2.9%
+Android 8.0 Oreo		4.0%
+Android 8.1 Oreo		9.7%
+Android 9 Pie		    18.2%
+Android 10 Q		    26.5%
+Android 11 R		    24.3%
+Android 12 Snow cone	31	-*/
+class MainActivity : BaseActivity<ActivityMainBinding>(), MainView {
 
     companion object {
         val TAG = MainActivity::class.simpleName
     }
 
     private val viewModel: MainActivityVM by viewModels()
-    private lateinit var binding: ActivityMainBinding
 
     // why call lazy?
     // most of this action on case is call when click
@@ -56,23 +65,17 @@ class MainActivity : BaseActivity(), MainView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
         viewModel.bind(this)
         initView()
     }
 
-    private fun initView() {
-        binding.cameraLayout.setOnClickListener {
-            tryAuthenticateBiometric()
-        }
-        binding.continueTextView.setOnClickListener {
-            tryAuthenticateBiometric()
-        }
-        initBiometric()
+    //Override function
+
+    override fun rootView(): ActivityMainBinding {
+        return ActivityMainBinding.inflate(layoutInflater)
     }
 
-    //Override function
     override fun errorMessage(msg: String) {
         showSnackBar(msg)
     }
@@ -94,6 +97,16 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     // private function
+    private fun initView() {
+        binding.cameraLayout.setOnClickListener {
+            tryAuthenticateBiometric()
+        }
+        binding.continueTextView.setOnClickListener {
+            tryAuthenticateBiometric()
+        }
+        initBiometric()
+    }
+
     private val authenticationCallBack = object : BiometricPrompt.AuthenticationCallback() {
         override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
             super.onAuthenticationError(errorCode, errString)
@@ -107,31 +120,63 @@ class MainActivity : BaseActivity(), MainView {
 
         override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
             super.onAuthenticationSucceeded(result)
-            val type = result.authenticationType
-            showSnackBar("\uD83C\uDF89 Authentication successful! Type: $type \uD83C\uDF89")
+            goToScanActivity()
         }
     }
 
     private fun initBiometric() {
-        // Initialize PromptInfo for title, subtitle, and authenticators of the biometric
-        try {
-            promptInfo = BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric authentication")
-                .setSubtitle("Please authenticate yourself first.")
-                .setAllowedAuthenticators(authenticators)
-                .build()
-        } catch (e: Exception) {
-            showSnackBar(e.message ?: "Unable to initialize PromptInfo")
+        if (canDoBiometric()) {
+            try {
+                promptInfo = BiometricPrompt.PromptInfo.Builder()
+                    .setTitle("Biometric authentication")
+                    .setSubtitle("Please authenticate yourself first.")
+                    .setAllowedAuthenticators(authenticators)
+                    .build()
+            } catch (e: Exception) {
+                showSnackBar(e.message ?: "Unable to initialize PromptInfo")
+            }
         }
     }
 
     private fun tryAuthenticateBiometric() {
-        viewModel.checkDeviceCapability(biometricManager.canAuthenticate(authenticators))
+        if (canDoBiometric()) {
+            viewModel.checkDeviceCapability(biometricManager.canAuthenticate(authenticators))
+        } else {
+            goToScanActivity()
+        }
+    }
+
+    private fun canDoBiometric(): Boolean {
+        // if we don't allowed use to be scan
+        // that is not user friendly
+        // they all just want to use the app
+        //we can add custom page for passcode for them,
+        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+
+    }
+
+    private fun goToScanActivity() {
+        if (askPermission()) {
+            IDScannerActivity.startActivity(this@MainActivity)
+        }
+    }
+
+    private fun askPermission(): Boolean {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 999)
+            return false
+        }
+        return true
     }
 
     private fun showSnackBar(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 //        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show()
     }
-    // any public function here
+
+
 }
